@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  hilla-javers:
+    build: .
+    environment:
+      SPRING_DATA_MONGODB_HOST: mongo-db
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: hilla-javers
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - mongo-db
+  mongo-db:
+    image: mongo:4.4.3
+    ports:
+      - "27017:27017"
+    restart: always
