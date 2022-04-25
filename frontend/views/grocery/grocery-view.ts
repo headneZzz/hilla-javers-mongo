@@ -26,9 +26,8 @@ export class GroceryView extends View {
             <div class="p-m">
                 <h3>Продукты</h3>
                 <vaadin-grid .items="${this.groceries}" theme="row-stripes" style="max-width: 600px">
-                    <!--(8)-->
-                    <vaadin-grid-column path="name"></vaadin-grid-column>
-                    <vaadin-grid-column path="quantity"></vaadin-grid-column>
+                    <vaadin-grid-column header="Название" path="name"></vaadin-grid-column>
+                    <vaadin-grid-column header="Количество" path="quantity"></vaadin-grid-column>
                     <vaadin-grid-column .renderer="${this.manageRenderer}"></vaadin-grid-column>
                 </vaadin-grid>
             </div>
@@ -49,6 +48,4 @@ export class GroceryView extends View {
             root
         );
     };
-
-
 }

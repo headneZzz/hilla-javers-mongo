@@ -28,4 +28,9 @@ public class HistoryRepository {
         JqlQuery jqlQuery = QueryBuilder.byClass(Grocery.class).withScopeCommitDeep().build();
         return javers.findShadows(jqlQuery);
     }
+
+    public List<CdoSnapshot> getById(String id) {
+        JqlQuery jqlQuery = QueryBuilder.byInstanceId(id, Grocery.class).build();
+        return javers.findSnapshots(jqlQuery);
+    }
 }

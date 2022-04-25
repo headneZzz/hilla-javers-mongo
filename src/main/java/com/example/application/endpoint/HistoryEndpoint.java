@@ -21,4 +21,8 @@ public class HistoryEndpoint {
     public @Nonnull List<@Nonnull GroceryItem> getAllChangedGrocery() {
         return historyService.getAllChangedGrocery();
     }
+
+    public @Nonnull List<@Nonnull String> getById(String id) {
+        return historyService.getById(id);
+    }
 }

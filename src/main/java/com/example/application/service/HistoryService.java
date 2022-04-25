@@ -26,4 +26,10 @@ public class HistoryService {
                 .map(groceryMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    public List<String> getById(String id) {
+        return historyRepository.getById(id).stream()
+                .map(i -> (String) i.getState().getPropertyValue("name"))
+                .collect(Collectors.toList());
+    }
 }

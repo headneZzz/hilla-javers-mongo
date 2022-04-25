@@ -1,6 +1,6 @@
 import { Route } from '@vaadin/router';
 import './views/grocery/grocery-view';
-import './views/grocery/history-view';
+import './views/history/history-view';
 import './views/main-layout';
 
 export type ViewRoute = Route & {
@@ -33,6 +33,11 @@ export const viewRoutes: ViewRoute[] = [
     component: 'history-view',
     icon: 'las la-history',
     title: 'История',
+  },
+  {
+    path: 'history/:itemId',
+    action: async () => { await import('./views/history/history-item-view'); },
+    component: 'history-item-view',
   },
 ];
 export const routes: ViewRoute[] = [

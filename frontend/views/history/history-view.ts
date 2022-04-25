@@ -9,6 +9,7 @@ import {Binder} from '@hilla/form';
 import {getAllChangedGrocery} from 'Frontend/generated/HistoryEndpoint';
 import GroceryItem from 'Frontend/generated/com/example/application/data/GroceryItem';
 import GroceryItemModel from 'Frontend/generated/com/example/application/data/GroceryItemModel';
+import {router} from "Frontend/index";
 
 @customElement('history-view')
 export class HistoryView extends View {
@@ -20,11 +21,15 @@ export class HistoryView extends View {
     render() {
         return html`
             <div class="p-m">
-                <h3>Grocery List</h3>
-                <vaadin-grid .items="${this.groceries}" theme="row-stripes" style="max-width: 400px">
-                    <vaadin-grid-column path="name"></vaadin-grid-column>
-                    <vaadin-grid-column path="quantity"></vaadin-grid-column>
-                </vaadin-grid>
+                <h3>История</h3>
+                ${this.groceries.map(value => {
+                    return html`
+                        <a href="${router.urlForPath('/history/' + value.id)}">
+                            ${value.name}
+                        </a>
+                        <br>
+                    `
+                })}
             </div>
         `;
     }

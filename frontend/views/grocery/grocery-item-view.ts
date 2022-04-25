@@ -6,7 +6,7 @@ import {html} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {View} from 'Frontend/views/view';
 import {Binder, field} from '@hilla/form';
-import {getGrocery, save} from 'Frontend/generated/GroceryItemEndpoint';
+import {getGrocery, save} from 'Frontend/generated/GroceryEndpoint';
 import GroceryItem from 'Frontend/generated/com/example/application/data/GroceryItem';
 import GroceryItemModel from 'Frontend/generated/com/example/application/data/GroceryItemModel';
 import '@vaadin/icon';
@@ -35,15 +35,15 @@ export class GroceryItemView extends View implements BeforeEnterObserver {
                 <div>
                     <vaadin-text-field
                             ${field(this.binder.model.name)}
-                            label="Item">${this.grocery?.name}</vaadin-text-field>
+                            label="Название">${this.grocery?.name}</vaadin-text-field>
                     <vaadin-number-field
                             ${field(this.binder.model.quantity)}
                             has-controls
-                            label="Quantity"></vaadin-number-field>
+                            label="Количество"></vaadin-number-field>
                     <vaadin-button
                             theme="primary"
                             @click=${this.addItem}>
-                        Add
+                        Изменить
                     </vaadin-button>
                 </div>
             </div>

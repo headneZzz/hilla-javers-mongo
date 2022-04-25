@@ -21,4 +21,12 @@ public class GroceryEndpoint {
     public @Nonnull List<@Nonnull GroceryItem> getGroceries() {
         return groceryService.getAll();
     }
+
+    public @Nonnull GroceryItem getGrocery(String id) {
+        return groceryService.getGrocery(id);
+    }
+
+    public GroceryItem save(GroceryItem item) {
+        return groceryService.save(item);
+    }
 }
