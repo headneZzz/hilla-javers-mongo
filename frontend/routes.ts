@@ -1,5 +1,6 @@
 import { Route } from '@vaadin/router';
 import './views/grocery/grocery-view';
+import './views/grocery/history-view';
 import './views/main-layout';
 
 export type ViewRoute = Route & {
@@ -8,7 +9,7 @@ export type ViewRoute = Route & {
   children?: ViewRoute[];
 };
 
-export const views: ViewRoute[] = [
+export const viewRoutes: ViewRoute[] = [
   // place routes below (more info https://hilla.dev/docs/routing)
   {
     path: '',
@@ -19,14 +20,25 @@ export const views: ViewRoute[] = [
   {
     path: 'grocery',
     component: 'grocery-view',
-    icon: 'la la-list-alt',
-    title: 'Grocery',
+    icon: 'las la-list-alt',
+    title: 'Продукты',
+  },
+  {
+    path: 'grocery/:itemId',
+    action: async () => { await import('./views/grocery/grocery-item-view'); },
+    component: 'grocery-item-view',
+  },
+  {
+    path: 'history',
+    component: 'history-view',
+    icon: 'las la-history',
+    title: 'История',
   },
 ];
 export const routes: ViewRoute[] = [
   {
     path: '',
     component: 'main-layout',
-    children: [...views],
-  },
+    children: [...viewRoutes],
+  }
 ];

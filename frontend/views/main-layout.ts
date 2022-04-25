@@ -8,7 +8,7 @@ import '@vaadin/tabs/vaadin-tab';
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { router } from '../index';
-import { views } from '../routes';
+import { viewRoutes } from '../routes';
 import { appStore } from '../stores/app-store';
 import { Layout } from './view';
 
@@ -66,6 +66,6 @@ export class MainLayout extends Layout {
   }
 
   private getMenuRoutes(): RouteInfo[] {
-    return views.filter((route) => route.title) as RouteInfo[];
+    return viewRoutes.filter((route) => route.title) as RouteInfo[];
   }
 }

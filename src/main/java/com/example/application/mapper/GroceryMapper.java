@@ -9,6 +9,7 @@ public class GroceryMapper {
 
     public Grocery toEntity(GroceryItem dto) {
         Grocery grocery = new Grocery();
+        grocery.setId(dto.getId());
         grocery.setName(dto.getName());
         grocery.setQuantity(dto.getQuantity());
         return grocery;
@@ -16,6 +17,7 @@ public class GroceryMapper {
 
     public GroceryItem toDto (Grocery entity) {
         GroceryItem groceryItem = new GroceryItem();
+        groceryItem.setId(entity.getId());
         groceryItem.setName(entity.getName());
         groceryItem.setQuantity(entity.getQuantity());
         return groceryItem;

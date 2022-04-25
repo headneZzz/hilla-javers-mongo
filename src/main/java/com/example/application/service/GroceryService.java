@@ -1,6 +1,7 @@
 package com.example.application.service;
 
 import com.example.application.data.GroceryItem;
+import com.example.application.entity.Grocery;
 import com.example.application.mapper.GroceryMapper;
 import com.example.application.repository.GroceryRepository;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,10 @@ public class GroceryService {
         return groceryRepository.findAll().stream()
                 .map(groceryMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public GroceryItem getGrocery(String id) {
+        return groceryMapper.toDto(groceryRepository.findById(id).orElse(new Grocery()));
     }
 
     public GroceryItem save(GroceryItem item) {

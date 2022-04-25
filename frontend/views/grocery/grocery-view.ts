@@ -2,57 +2,53 @@ import '@vaadin/button';
 import '@vaadin/text-field';
 import '@vaadin/number-field';
 import '@vaadin/grid/vaadin-grid';
-import {html} from 'lit';
+import {html, render} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {View} from 'Frontend/views/view';
-import {Binder, field} from '@hilla/form';
-import {getGroceries, save} from 'Frontend/generated/GroceryEndpoint';
+import {Binder} from '@hilla/form';
+import {getGroceries} from 'Frontend/generated/GroceryEndpoint';
 import GroceryItem from 'Frontend/generated/com/example/application/data/GroceryItem';
 import GroceryItemModel from 'Frontend/generated/com/example/application/data/GroceryItemModel';
+import {GridItemModel} from "@vaadin/grid";
+import '@vaadin/icon';
+import '@vaadin/icons';
+import {router} from "Frontend/index";
 
 @customElement('grocery-view')
 export class GroceryView extends View {
 
-  @state()
-  private groceries: GroceryItem[] = [];
-  private binder = new Binder(this, GroceryItemModel);
+    @state()
+    private groceries: GroceryItem[] = [];
+    private binder = new Binder(this, GroceryItemModel);
 
-  render() {
-    return html`
-      <div class="p-m">
-        <div>
-          <vaadin-text-field
-            ${field(this.binder.model.name)}
-            label="Item"> </vaadin-text-field> <!--(5)-->
-          <vaadin-number-field
-            ${field(this.binder.model.quantity)}
-            has-controls
-            label="Quantity"></vaadin-number-field> <!--(6)-->
-          <vaadin-button
-            theme="primary"
-            @click=${this.addItem}
-            ?disabled=${this.binder.invalid}>Add</vaadin-button> <!--(7)-->
-        </div>
-
-        <h3>Grocery List</h3>
-        <vaadin-grid .items="${this.groceries}" theme="row-stripes" style="max-width: 400px">
-          <!--(8)-->
-          <vaadin-grid-column path="name"></vaadin-grid-column>
-          <vaadin-grid-column path="quantity"></vaadin-grid-column>
-        </vaadin-grid>
-      </div>
-    `;
-  }
-
-  async addItem() {
-    const groceryItem = await this.binder.submitTo(save);
-    if (groceryItem) {
-      this.groceries = [...this.groceries, groceryItem];
-      this.binder.clear();
+    render() {
+        return html`
+            <div class="p-m">
+                <h3>Продукты</h3>
+                <vaadin-grid .items="${this.groceries}" theme="row-stripes" style="max-width: 600px">
+                    <!--(8)-->
+                    <vaadin-grid-column path="name"></vaadin-grid-column>
+                    <vaadin-grid-column path="quantity"></vaadin-grid-column>
+                    <vaadin-grid-column .renderer="${this.manageRenderer}"></vaadin-grid-column>
+                </vaadin-grid>
+            </div>
+        `;
     }
-  }
 
-  async firstUpdated() {
-    this.groceries = await getGroceries();
-  }
+    async firstUpdated() {
+        this.groceries = await getGroceries();
+    }
+
+    private manageRenderer = (root: HTMLElement, _: HTMLElement, model: GridItemModel<GroceryItem>) => {
+        render(
+            html`
+                <a href="${router.urlForPath('/grocery/' + model.item.id)}">
+                    <vaadin-icon icon="vaadin:edit"></vaadin-icon>
+                </a>
+            `,
+            root
+        );
+    };
+
+
 }

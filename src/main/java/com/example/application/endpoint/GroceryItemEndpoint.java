@@ -6,19 +6,21 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 import dev.hilla.Endpoint;
 import dev.hilla.Nonnull;
 
-import java.util.List;
-
 @Endpoint
 @AnonymousAllowed
-public class GroceryEndpoint {
+public class GroceryItemEndpoint {
 
     private final GroceryService groceryService;
 
-    public GroceryEndpoint(GroceryService groceryService) {
+    public GroceryItemEndpoint(GroceryService groceryService) {
         this.groceryService = groceryService;
     }
 
-    public @Nonnull List<@Nonnull GroceryItem> getGroceries() {
-        return groceryService.getAll();
+    public @Nonnull GroceryItem getGrocery(String id) {
+        return groceryService.getGrocery(id);
+    }
+
+    public GroceryItem save(GroceryItem item) {
+        return groceryService.save(item);
     }
 }
