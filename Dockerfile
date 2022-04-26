@@ -1,4 +1,9 @@
-FROM maven:3.8.2-jdk-11
+FROM maven:3.8.2-jdk-11 as maven
+COPY . /home/maven/project/hilla-grocery
+WORKDIR /home/maven/project/hilla-grocery
+RUN mvn clean package -Pproduction
+
+FROM openjdk:11-jdk
 
 ARG REFRESHED_AT
 ENV REFRESHED_AT $REFRESHED_AT
@@ -15,12 +20,6 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt-get upgrade -qq \
   && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /
-COPY . .
-
-RUN mvn clean package -Pproduction
-CMD java -jar target/hilla-grocery-app-1.0-SNAPSHOT.jar
-
-#RUN ./mvnw
-
+COPY --from=maven /home/maven/project/hilla-grocery/target/hilla*.jar /hilla.jar
 EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/hilla.jar"]
