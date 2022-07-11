@@ -6,7 +6,7 @@ import {html, render} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {View} from 'Frontend/views/view';
 import {Binder} from '@hilla/form';
-import {getGroceries} from 'Frontend/generated/GroceryEndpoint';
+import {getGroceries, save} from 'Frontend/generated/GroceryEndpoint';
 import GroceryItem from 'Frontend/generated/com/example/application/data/GroceryItem';
 import GroceryItemModel from 'Frontend/generated/com/example/application/data/GroceryItemModel';
 import {GridItemModel} from "@vaadin/grid";
@@ -25,6 +25,11 @@ export class GroceryView extends View {
         return html`
             <div class="p-m">
                 <h3>Продукты</h3>
+                <vaadin-button
+                        theme="primary"
+                        @click=${this.addItem}>
+                    Добавить
+                </vaadin-button>
                 <vaadin-grid .items="${this.groceries}" theme="row-stripes" style="max-width: 600px">
                     <vaadin-grid-column header="Название" path="name"></vaadin-grid-column>
                     <vaadin-grid-column header="Количество" path="quantity"></vaadin-grid-column>
@@ -32,6 +37,13 @@ export class GroceryView extends View {
                 </vaadin-grid>
             </div>
         `;
+    }
+
+    async addItem() {
+        const grocery = {} as GroceryItem
+        grocery.name = "123"
+        grocery.quantity = 2
+        await save(grocery)
     }
 
     async firstUpdated() {
